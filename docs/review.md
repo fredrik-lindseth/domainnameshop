@@ -2,8 +2,9 @@
 
 Reviewed the pinned `github.com/libdns/domainnameshop v0.2.2` source against
 the [Domeneshop API contract](https://api.domeneshop.no/docs/) and libdns 1.1.1.
-This document records unresolved upstream limitations, not fixes delivered by
-this wrapper. Review these before deploying to production.
+This document records limitations found in the upstream dependency. They are
+addressed by the local `provider/` package now maintained in this repository.
+Keep the record until an upstream release has equivalent coverage.
 
 ## Findings in libdns/domainnameshop v0.2.2
 
@@ -38,13 +39,11 @@ this wrapper. Review these before deploying to production.
    `SetRecords` write all returned records with `log.Printf`. Remove this
    debug logging upstream to avoid disclosing zone contents in ordinary logs.
 
-## Recommended follow-up
+## Follow-up
 
-Fix these in the libdns provider with mock HTTP regression tests for numeric
+Contribute the fixes upstream with mock HTTP regression tests for numeric
 MX/SRV fields, exact zone selection, typed and generic record conversion,
-record identity, whole-RRset replacement, and partial failures. Then update
-this wrapper to a reviewed release and repeat the Caddy integration checks.
+record identity, whole-RRset replacement, and partial failures. Replace the
+local provider only after a reviewed release passes the same integration checks.
 
-Do not duplicate the provider inside this wrapper as a routine configuration
-fix. Maintaining a local provider fork is a separate ownership decision. No
-live DNS operations were performed during this review.
+No live DNS operations were performed during this review.
