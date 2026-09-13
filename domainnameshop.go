@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/caddy-dns/domainnameshop/provider"
 	"github.com/caddyserver/caddy/v2"
 	"github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
-	"github.com/libdns/domainnameshop"
 )
 
 // Provider lets Caddy read and manipulate DNS records hosted by this DNS provider.
-type Provider struct{ *domainnameshop.Provider }
+type Provider struct{ *provider.Provider }
 
 func init() {
 	caddy.RegisterModule(Provider{})
@@ -21,7 +21,7 @@ func init() {
 func (Provider) CaddyModule() caddy.ModuleInfo {
 	return caddy.ModuleInfo{
 		ID:  "dns.providers.domainnameshop",
-		New: func() caddy.Module { return &Provider{new(domainnameshop.Provider)} },
+		New: func() caddy.Module { return &Provider{new(provider.Provider)} },
 	}
 }
 
@@ -56,7 +56,7 @@ func (p *Provider) Validate() error {
 
 func (p *Provider) initProvider() {
 	if p.Provider == nil {
-		p.Provider = new(domainnameshop.Provider)
+		p.Provider = new(provider.Provider)
 	}
 }
 

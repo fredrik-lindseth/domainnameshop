@@ -1,17 +1,19 @@
 # domainnameshop
 
-This repository is a Caddy DNS module wrapper around
-`github.com/libdns/domainnameshop`. DNS HTTP operations, record conversion,
-caching, and concurrency belong to that dependency; this repository owns
-module registration, configuration parsing, and credential provisioning.
+This repository contains a Caddy DNS module and its maintained local
+`libdns` provider. It owns module registration, configuration parsing,
+credential provisioning, DNS HTTP operations, record conversion, and
+concurrency.
 
 ## Files and contracts
 
 - `domainnameshop.go`: registers `dns.providers.domainnameshop`, parses
   Caddyfile credentials, and resolves Caddy placeholders before validation.
 - `domainnameshop_test.go`: configuration and module regression tests.
+- `provider/`: Domeneshop API client and libdns implementation; its tests
+  cover DNS record conversion and identity contracts.
 - `Dockerfile`: builds Caddy from this checkout via a local xcaddy replacement.
-- `docs/review.md`: identified limitations in the pinned libdns dependency.
+- `docs/review.md`: upstream limitations that motivated the local provider.
 
 Keep the module path `github.com/caddy-dns/domainnameshop` for compatibility.
 This GitHub fork is `fredrik-lindseth/domainnameshop`; use an explicit module
@@ -35,8 +37,7 @@ docker run --rm caddy-domainnameshop:test caddy list-modules
 ```
 
 Use mock HTTP responses for API regression tests; normal tests must not mutate
-real DNS or require credentials. Wrapper tests do not establish correctness of
-the upstream provider. Report remaining dependency limitations explicitly.
+real DNS or require credentials. Report remaining provider limitations explicitly.
 If dependencies change, update `go.mod` and `go.sum` together and verify the
 Caddy integration build, not just this package.
 

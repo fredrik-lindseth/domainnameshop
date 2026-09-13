@@ -1,15 +1,18 @@
-# Domainname.shop DNS module for Caddy
+# Domeneshop DNS provider for Caddy
+
+[![Test](https://github.com/fredrik-lindseth/domainnameshop/actions/workflows/test.yml/badge.svg)](https://github.com/fredrik-lindseth/domainnameshop/actions/workflows/test.yml)
+
+Use [Caddy](https://caddyserver.com/) with Domeneshop DNS for automatic TLS certificates through ACME DNS-01 challenges.
 
 This module lets [Caddy](https://caddyserver.com/) perform ACME DNS-01 challenges
 using [Domainname.shop / Domeneshop](https://domene.shop).
 Its Caddy module ID is `dns.providers.domainnameshop`.
 
 This repository is a fork of `github.com/caddy-dns/domainnameshop` and retains
-that Go module path. The DNS client is supplied by
-[`github.com/libdns/domainnameshop`](https://github.com/libdns/domainnameshop).
-See [the dependency review](docs/review.md) for known DNS correctness issues in
-the pinned client, including cleanup in zones with MX/SRV records. Passing
-wrapper tests does not mean those upstream issues are fixed.
+that Go module path for Caddy compatibility. It includes a maintained local
+`libdns` provider, so record conversion, identity, DNS cleanup, and RRset
+replacement are tested here. [The upstream review](docs/review.md) explains
+why the provider is local and what to verify before replacing it upstream.
 
 ## Build
 
