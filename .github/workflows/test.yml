@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - run: go mod tidy -diff
+      - run: go vet ./...
+      - run: go test -race ./...
+      - run: docker build --tag caddy-domainnameshop:test .
+      - name: Verify module registration
+        run: docker run --rm caddy-domainnameshop:test caddy list-modules | grep -Fx dns.providers.domainnameshop

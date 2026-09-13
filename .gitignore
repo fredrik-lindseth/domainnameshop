@@ -1,0 +1,4 @@
+/caddy
+/coverage.out
+.env
+.env.*

@@ -1,0 +1,6 @@
+.git
+.github
+caddy
+coverage.out
+.env
+.env.*
